@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="robots" content="noindex, nofollow">
+  <title></title>
+
+  <script type="text/javascript" src="assets/js/jquery-2.2.4.min.js" ></script>
+
+  <script type="text/javascript" src="assets/js/github_contribution.js"></script>
+  <link rel="stylesheet" media="all" href="assets/css/github_contribution.css"/>
+
+  <script src="assets/marked/marked.min.js"></script>
+  <link href="assets/marked/marked.css" media="all" rel="stylesheet" />
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+
+        var date = new Date();
+        var year = date.getFullYear();
+        $('#year a').html(year);
+        $("title").html(year);
+        $.get("https://douyin.github.io/"+year+"/README.md", function(result){
+          $('#README').html(marked(result));
+
+          var data = [];
+          var jing = { D: 1, C: 2, B: 3, A: 4 };
+          $("#README > h2").each(function(){
+            if(/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test($(this).text())){
+              var p = $(this).find('+ p').text();
+              var count = jing[p.substr(0, 1)];
+              var text = p;
+              data.push({date: $(this).text(), count: count, text: text});
+            }
+          });
+          // console.log(data);
+
+          $('#contributions').github_graph( {
+            month_names: ['01','02','03','04','05','06','07','08','09','10','11','12'],
+            h_days : ['一','三','五'],
+            // 91159343898A74F4D5A7484E00952ACE5B319FCEB32C63FADDF8C035DC6C155E6C461863268AAF709D7C20D289582FC63A9AC97796F81F3FDECEB0ECF401229C6F418F7E47AA
+            colors: ['#eeeeee','#FF0000 ','#FFFF00','#AFEEEE','#008000'],
+            data: data
+          });
+        });
+
+    });
+  </script>
+
+  <!-- 9691218DFB966EDF9CCA905E701CF4C4FDFD7310F695 -->
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?01cadeb7b6097b813566abe51713f5c9";
+    var s = document.getElementsByTagName("script")[0]; 
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+</head>
+
+<body>
+  <div id="year"><a href="https://web.archive.org/save/https://douyin.github.io/" target="_blank"></a></div>
+  <div id="contributions"></div>
+  <div class="markdown-body" id="README"></div>
+</body>
+</html>
