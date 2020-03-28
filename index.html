@@ -20,7 +20,7 @@
         var year = date.getFullYear();
         $('#year a').html(year);
         $("title").html(year);
-        $.get("https://douyin.github.io/"+year+"/README.md", function(result){
+        $.get("https://douyin.github.io/"+year+"/README.md?t=" + date.getTime(), function(result){
           $('#README').html(marked(result));
 
           var data = [];
